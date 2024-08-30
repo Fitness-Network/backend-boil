@@ -1,0 +1,58 @@
+name: ${APP_NAME}-${APP_MODE}
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: ${APP_NAME}-${APP_MODE}-mongodb
+    restart: always
+    depends_on:
+      - mongo_seed
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - database:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+  
+  mongo_seed:
+    image: mongo:7.0
+    container_name: ${APP_NAME}-${APP_MODE}-seed
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - APP_MODE=${APP_MODE}
+    volumes:
+      - ../seed:/mongo-seed
+      - database:/data/db
+    networks:
+      - app-network
+    command: /mongo-seed/import.sh
+
+  mongo_backup:
+    image: mongo:7.0
+    container_name: ${APP_NAME}-${APP_MODE}-backup
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - APP_MODE=${APP_MODE}
+    volumes:
+      - ../seed:/mongo-seed
+      - database:/data/db
+    networks:
+      - app-network
+    command: /mongo-seed/backup.sh
+
+networks:
+  app-network:
+    driver: bridge
+    name: ${APP_NAME}-${APP_MODE}
+
+volumes:
+  database:
+    name: ${APP_NAME}-database-${APP_MODE}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+  <style>
+    body,
+    html {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      font-family: "Inter", sans-serif;
+    }
+    img {
+      display: block;
+      width: 100%;
+    }
+    td {
+      padding: 0 24px;
+    }
+    p {
+      margin: 0;
+      line-height: 150%;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: inline;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    @media (min-width: 430px) {
+      body,
+      html {
+        font-size: 20px;
+      }
+    }
+  </style>
+  </head>
+  <body>
+    <table
+      style="
+        width: 100%;
+        max-width: 660px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #f1f6f9;
+      "
+    >
+      <thead>
+        <th>
+          <img
+            src="https://tonic-storage.s3.ap-southeast-1.amazonaws.com/dev/Banner.png"
+            alt="TONIC"
+            style="display: block; width: 100%;"
+          />
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <br />
+            <p>Dear <strong>{{email}},</strong></p>
+            <br />
+            <p>Welcome to the <strong>Tonic Phone Referral Program!</strong></p>
+            <p style="color: #005b8d; font-style: italic">
+              Note: This is for our referral program, not a regular shopping
+              account.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <br />
+            <strong>To start earning: </strong>
+            <div style="margin-top: 12px">
+              <p style="font-weight: 700">1. Verify your email:</p>
+              <a
+                href="{{verify_link}}"
+                target="_blank"
+                style="
+                  margin: 4px 0;
+                  border: none;
+                  display: block;
+                  max-width: 320px;
+                  background-color: #0088d4;
+                  padding: 12px;
+                  border-radius: 8px;
+                  cursor: pointer;
+                "
+              >
+                <span
+                  style="
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 16px;
+                  "
+                  >Verify Your Email</span
+                >
+              </a>
+              <p style="font-weight: 700">2. Access your referral dashboard</p>
+              <p style="font-weight: 700">
+                3. Share Tonic Phone products and earn commissions
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <br />
+            <p>
+              Questions or signed up by mistake? Contact our support team. We're
+              excited to partner with you in revolutionizing the mobile
+              experience!
+            </p>
+            <br />
+            <p>Best regards,</p>
+            <p>
+              <strong>Tonic Phone Referral Team</strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="height: 100px"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
