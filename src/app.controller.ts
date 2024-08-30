@@ -1,9 +1,12 @@
-import { Controller, Get, Request } from "@nestjs/common";
+import { Body, Controller, Get, Post, Request } from "@nestjs/common";
+import { Public } from "nest-keycloak-connect";
 
 @Controller()
 export class AppController {
-  @Get('/cb')
-  async callback(@Request() req: Request) {
-    console.log("req is: ", req);
+
+  @Post('/cb')
+  @Public()
+  async callback(@Request() req: Request, @Body() body: any) {
+    console.log("req is: ", body);
   }
 }
