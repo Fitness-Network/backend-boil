@@ -3,20 +3,32 @@ import { Test } from "@nestjs/testing";
 import axios from "axios";
 import request from 'supertest';
 import { AppModule } from "../../app.module";
+import { ConfigService } from "@nestjs/config";
+import { KeycloakConfig } from "src/config";
 
-const mockLogin = async (data: { username: string, password: string }) => {
+type LoginData = {
+  username: string;
+  password: string;
+  realm: string;
+  clientId: string;
+  clientSecret: string;
+  url: string;
+}
+
+const mockLogin = async (data: LoginData) => {
 
   let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://iam.relationc.com/realms/Fitnet/protocol/openid-connect/token',
+    url: `${data.url}/realms/${data.realm}/protocol/openid-connect/token`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     data: {
-      ...data,
-      client_id: 'backend',
-      client_secret: 'aNUNvfA0yKYhmBIFfCcL29KGdGmadvLg',
+      client_id: data.clientId,
+      client_secret: data.clientSecret,
+      username: data.username,
+      password: data.password,
       grant_type: 'password'
     }
   };
@@ -40,13 +52,19 @@ describe('Example', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
+
+    const configSerice: ConfigService = app.get(ConfigService)
+    const config = configSerice.get<KeycloakConfig>('keycloak')!;
+
     userToken = await mockLogin({
-      username: 'hoaian412003@gmail.com',
-      password: '123123123'
+      ...config,
+      username: config.accounts.user.account,
+      password: config.accounts.user.pass
     })
     adminToken = await mockLogin({
-      username: 'backendadmin',
-      password: '123123123'
+      ...config,
+      username: config.accounts.admin.account,
+      password: config.accounts.admin.pass
     })
   })
 
@@ -85,6 +103,21 @@ describe('Example', () => {
 
     it('Should be 200 with admin role', () => {
       return request(app.getHttpServer()).get('/example/with-permission/user')
+        .set('Authorization', 'Bearer ' + adminToken)
+        .expect(200)
+    })
+  })
+
+  describe('[GET] /example/with-permission/admin', () => {
+
+    it('Should be 403 with admin role', () => {
+      return request(app.getHttpServer()).get('/example/with-permission/admin')
+        .set('Authorization', 'Bearer ' + userToken)
+        .expect(403)
+    })
+
+    it('Should be 200 with admin role', () => {
+      return request(app.getHttpServer()).get('/example/with-permission/admin')
         .set('Authorization', 'Bearer ' + adminToken)
         .expect(200)
     })

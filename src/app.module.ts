@@ -1,25 +1,32 @@
-
 import { Module } from '@nestjs/common';
 import { ExampleModule } from './modules/example/example.module';
 import { AuthGuard, KeycloakConnectModule, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { AppController } from './app.controller';
+import { KeycloakConfig, keycloakLoader } from './config';
 
 @Module({
   imports: [
     ExampleModule,
-    KeycloakConnectModule.register({
-      authServerUrl: 'https://iam.relationc.com',
-      clientId: 'backend',
-      realm: 'Fitnet',
-      secret: 'aNUNvfA0yKYhmBIFfCcL29KGdGmadvLg'
+    KeycloakConnectModule.registerAsync({
+      useFactory: (configService: ConfigService) => {
+        const config = configService.get<KeycloakConfig>('keycloak')!;
+        return {
+          realm: config.realm,
+          clientId: config.clientId,
+          secret: config.clientSecret,
+          authServerUrl: config.url,
+        }
+      },
+      inject: [ConfigService]
     }),
-    ConfigModule
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [keycloakLoader],
+      expandVariables: true,
+    })
   ],
-  controllers: [
-    AppController
-  ],
+  controllers: [],
   providers: [
     {
       provide: APP_GUARD,
