@@ -11,9 +11,9 @@ jobs:
 
       - name: Setup env
         env:
-          ENV: ${{ vars.env }}
+          ENV: ${{ vars.ENV }}
         run: |
-          echo $ENV
+          echo $ENV > .env
 
       - name: Use Node.js
         uses: actions/setup-node@v4
