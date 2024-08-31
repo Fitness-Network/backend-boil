@@ -123,7 +123,7 @@ describe('Example', () => {
     })
   })
 
-  afterAll((done) => {
-    done()
+  afterAll(async () => {
+    await app.close();
   })
 })
