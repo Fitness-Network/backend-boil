@@ -122,4 +122,8 @@ describe('Example', () => {
         .expect(200)
     })
   })
+
+  afterAll(async () => {
+    await app.close();
+  })
 })

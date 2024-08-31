@@ -4,14 +4,22 @@ on:
   pull_request:
 
 jobs:
-  build:
+  e2e-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup env
+        env:
+          ENV: ${{ vars.ENV }}
+        run: |
+          echo $ENV > .env
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - run: npm install
+      - run: npm run test
+
+    
