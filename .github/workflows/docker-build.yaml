@@ -3,10 +3,7 @@ name: e2e Test
 on:
   push:
     tags: 'v*.*'
-
-env:
-  REGISTRY: ${{secrets.DOCKER_REGISTRY}}
-  TAG: $REGISTRY/${{ github.event.repository.name }}/${{ github.ref_name }}
+    branches: master
 
 jobs:
   docker:
@@ -24,4 +21,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: $TAG
+          tags: ${{secrets.DOCKER_REGISTRY}}/${{ github.event.repository.name }}/${{ github.ref_name }}
+
+
