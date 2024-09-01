@@ -1,6 +1,6 @@
 {
   "name": "@fitnet/backend-boilerplate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bin": "generate.js",
   "repository": {
     "type": "git",
