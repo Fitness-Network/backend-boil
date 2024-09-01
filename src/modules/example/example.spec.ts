@@ -1,10 +1,10 @@
-import { INestApplication } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
+import { INestApplication, ValidationPipe } from "@nestjs/common";
 import axios from "axios";
 import request from 'supertest';
-import { AppModule } from "../../app.module";
 import { ConfigService } from "@nestjs/config";
-import { KeycloakConfig } from "src/config";
+import { KeycloakConfig } from "config";
+import { Example } from "./example.schema";
+import { createNestjsApp } from "utils/test";
 
 type LoginData = {
   username: string;
@@ -44,14 +44,10 @@ describe('Example', () => {
   let app: INestApplication
   let userToken: string;
   let adminToken: string;
+  let record: Example;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule]
-    }).compile()
-
-    app = moduleRef.createNestApplication();
-    await app.init();
+    app = await createNestjsApp();
 
     const configSerice: ConfigService = app.get(ConfigService)
     const config = configSerice.get<KeycloakConfig>('keycloak')!;
@@ -68,59 +64,91 @@ describe('Example', () => {
     })
   })
 
-  describe('[GET] /example/public', () => {
-    it('Should be 200 always because it public route', () => {
-      return request(app.getHttpServer())
-        .get('/example/public')
-        .expect(200)
-    })
+
+  it('[GET] /example -> 403 because role is user', () => {
+    return request(app.getHttpServer())
+      .post('/example')
+      .set('Authorization', 'Bearer ' + userToken)
+      .expect(403)
   })
 
-  describe('[GET] /example/with-roles', () => {
-
-    it('Should be 403 with user role', () => {
-      return request(app.getHttpServer())
-        .get('/example/with-role')
-        .set('Authorization', 'Bearer ' + userToken)
-        .expect(403)
-    })
-
-    it('Should be 200 with admin role', () => {
-      return request(app.getHttpServer())
-        .get('/example/with-role')
-        .set('Authorization', 'Bearer ' + adminToken)
-        .expect(200)
-    })
+  it('[GET] /example -> 400 because invalid validate', () => {
+    return request(app.getHttpServer())
+      .post('/example')
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(400)
   })
 
-  describe('[GET] /example/with-permission/user', () => {
-
-    it('Should be 200 with user role', () => {
-      return request(app.getHttpServer()).get('/example/with-permission/user')
-        .set('Authorization', 'Bearer ' + userToken)
-        .expect(200)
-    })
-
-    it('Should be 200 with admin role', () => {
-      return request(app.getHttpServer()).get('/example/with-permission/user')
-        .set('Authorization', 'Bearer ' + adminToken)
-        .expect(200)
-    })
+  it('[POST] /example -> 201 because valid request', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/example')
+      .send({
+        name: "Test"
+      })
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(201)
+    record = response.body;
   })
 
-  describe('[GET] /example/with-permission/admin', () => {
+  it('[GET] /example/:id -> 200 because role is user', () => {
+    return request(app.getHttpServer())
+      .get('/example/' + record._id)
+      .set('Authorization', 'Bearer ' + userToken)
+      .expect(200)
+  })
 
-    it('Should be 403 with admin role', () => {
-      return request(app.getHttpServer()).get('/example/with-permission/admin')
-        .set('Authorization', 'Bearer ' + userToken)
-        .expect(403)
-    })
+  it('[GET] /example -> 403 because role is user', () => {
+    return request(app.getHttpServer())
+      .get('/example')
+      .set('Authorization', 'Bearer ' + userToken)
+      .expect(403)
+  })
 
-    it('Should be 200 with admin role', () => {
-      return request(app.getHttpServer()).get('/example/with-permission/admin')
-        .set('Authorization', 'Bearer ' + adminToken)
-        .expect(200)
-    })
+  it('[GET] /example -> 200 because role is admin', () => {
+    return request(app.getHttpServer())
+      .get('/example')
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(200)
+  })
+
+  it('[PUT] /example/:id -> 200 because role is admin', () => {
+    return request(app.getHttpServer())
+      .put('/example/' + record._id)
+      .send({
+        name: "Test Updated"
+      })
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(200)
+  })
+
+  it('[DELETE] /example/soft -> 403 because role is user', () => {
+    return request(app.getHttpServer())
+      .delete('/example/soft')
+      .set('Authorization', 'Bearer ' + userToken)
+      .expect(403)
+  })
+
+  it('[DELETE] /example/soft -> 200 because role is admin', () => {
+    return request(app.getHttpServer())
+      .delete('/example/soft')
+      .query({ ids: [record._id] })
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(200)
+  })
+
+  it('[DELETE] /example/hard -> 403 because role is user', () => {
+    return request(app.getHttpServer())
+      .delete('/example/hard')
+      .set('Authorization', 'Bearer ' + userToken)
+      .expect(403)
+  })
+
+  it('[DELETE] /example/hard -> 200 because role is admin', () => {
+    return request(app.getHttpServer())
+      .delete('/example/hard')
+      .query({ ids: [record._id] })
+      .set('Authorization', 'Bearer ' + adminToken)
+      .expect(200)
   })
 
   afterAll(async () => {

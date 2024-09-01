@@ -1,7 +1,7 @@
 {
   "name": "@fitnet/backend-boilerplate",
   "version": "1.0.4",
-  "bin": "generate.js",
+  "bin": "scripts/generate.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fitness-Network/backend-boil.git"
@@ -18,7 +18,7 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --runInBand",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
@@ -65,6 +65,7 @@
     "passport-telegram": "^1.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "superagent": "^10.1.0",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
@@ -102,7 +103,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "./",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -115,10 +116,7 @@
     "moduleDirectories": [
       "node_modules",
       "src"
-    ],
-    "moduleNameMapper": {
-      "^src/(.*)$": "<rootDir>/"
-    }
+    ]
   },
   "bugs": {
     "url": "https://github.com/Fitness-Network/backend-boil/issues"
