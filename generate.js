@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { program } = require('commander');
-const spawn = require('cross-spawn');
 const fs = require('fs');
 const path = require('path');
 
@@ -30,5 +29,4 @@ fs.writeFileSync(
 fs.copyFileSync(path.join(projectDir, 'env.example'), path.join(projectDir, '.env'))
 console.log(`Modify .env to config app`);
 
-spawn.sync('npm', ['install'], { stdio: 'inherit' });
 console.log(`Created ${projectName} at ${projectDir}`);
