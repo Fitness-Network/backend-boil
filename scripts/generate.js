@@ -14,7 +14,7 @@ const currentDir = process.cwd();
 const projectDir = path.resolve(currentDir, projectName);
 
 fs.mkdirSync(projectDir, { recursive: true });
-fs.cpSync(__dirname, projectDir, { recursive: true })
+fs.cpSync(path.join(__dirname, '..'), projectDir, { recursive: true })
 
 const packageJson = require(path.join(projectDir, 'package.json'));
 packageJson.name = projectName;
