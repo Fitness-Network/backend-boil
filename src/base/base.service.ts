@@ -1,6 +1,6 @@
 import { set } from "lodash";
-import { DeleteResponse, Pagination, PaginationResponse } from "src/utils/response";
 import { AnyKeys, FilterQuery, Model, MongooseBulkWriteOptions, AnyBulkWriteOperation, QueryOptions, UpdateQuery, Document, Types, ProjectionType } from "mongoose";
+import { DeleteResponse, Pagination, PaginationResponse } from "utils/response";
 
 export class BaseService<T extends Document> {
   constructor(public readonly model: Model<T>) { }
@@ -68,6 +68,16 @@ export class BaseService<T extends Document> {
         isDeleted: true
       })
 
+    return {
+      deleted: count
+    }
+  }
+
+  async hardDelete(ids: Array<string>): Promise<DeleteResponse> {
+    const count = await this.count({ _id: { $in: ids } });
+    await this.model.deleteMany(
+      { _id: { $in: ids } },
+    )
     return {
       deleted: count
     }

@@ -4,6 +4,8 @@ import { AuthGuard, KeycloakConnectModule, ResourceGuard, RoleGuard } from 'nest
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { KeycloakConfig, keycloakLoader } from './config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MongoConfig, mongoConfigLoader } from './config/database.config';
 
 @Module({
   imports: [
@@ -20,9 +22,18 @@ import { KeycloakConfig, keycloakLoader } from './config';
       },
       inject: [ConfigService]
     }),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        const config: MongoConfig = configService.get('database')!;
+        return {
+          uri: config.uri
+        };
+      },
+      inject: [ConfigService]
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [keycloakLoader],
+      load: [keycloakLoader, mongoConfigLoader],
       expandVariables: true,
     })
   ],
