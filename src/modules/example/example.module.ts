@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ExampleController } from "./example.controller";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Example, ExampleSchema } from "./example.schema";
-import { ExampleService } from "./exmple.service";
+import { ExampleService } from "./example.service";
 
 @Module({
   controllers: [

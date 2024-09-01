@@ -1,14 +1,10 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
-export class UpdateExampleDto {
-  @IsString()
-  @IsOptional()
-  name?: string;
-}
+export class UpdateExampleDto { }
 
 export class UpdateExampleParams {
   @IsString({
     each: true
   })
-  id: string;
+  exampleId: string;
 }

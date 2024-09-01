@@ -1,0 +1,10 @@
+import { IsString } from "class-validator";
+
+export class Update{{Name}}Dto { }
+
+export class Update{{Name}}Params {
+  @IsString({
+    each: true
+  })
+  {{name}}Id: string;
+}

@@ -1,9 +1,9 @@
 import { IsString } from "class-validator";
 
-export class DeleteExampleQuery {
+export class Delete{{Name}}Query {
 
   @IsString({
     each: true
   })
-  exampleIds: Array<string>;
+  {{name}}Ids: Array<string>;
 }

@@ -7,5 +7,5 @@ export class GetAllExampleQuery extends Pagination {
 
 export class GetOneExampleParam {
   @IsString()
-  id: string;
+  exampleId: string;
 }

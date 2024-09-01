@@ -3,12 +3,12 @@ import { BaseSchema } from "base";
 import { Document } from "mongoose";
 
 
-export type ExampleDocument = Document & Example;
+export type {{Name}}Document = Document & {{Name}};
 
 @Schema({
   timestamps: true
 })
-export class Example extends BaseSchema {
+export class {{Name}} extends BaseSchema {
 }
 
-export const ExampleSchema = SchemaFactory.createForClass(Example);
+export const {{Name}}Schema = SchemaFactory.createForClass({{Name}});

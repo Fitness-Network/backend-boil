@@ -22,7 +22,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker:up:infra": "docker compose -f docker/infra.yaml --env-file .env up -d"
+    "docker:up:infra": "docker compose -f docker/infra.yaml --env-file .env up -d",
+    "module": "node scripts/new-module/index.js"
   },
   "dependencies": {
     "@nestjs/bull": "^10.2.0",
