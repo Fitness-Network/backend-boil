@@ -1,12 +1,13 @@
 {
-  "name": "@martin/backend-boilerpalte",
-  "version": "0.0.1",
-  "bin": {
-    "create-app": "./generate.js"
+  "name": "@fitnet/backend-boilerplate",
+  "version": "1.0.1",
+  "bin": "generate.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fitness-Network/backend-boil.git"
   },
   "description": "Package for authorization with keycloak",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
@@ -118,5 +119,13 @@
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/"
     }
+  },
+  "bugs": {
+    "url": "https://github.com/Fitness-Network/backend-boil/issues"
+  },
+  "homepage": "https://github.com/Fitness-Network/backend-boil#readme",
+  "main": "generate.js",
+  "directories": {
+    "test": "test"
   }
 }

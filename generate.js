@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { program } = require('commander');
 const spawn = require('cross-spawn');
 const fs = require('fs');
