@@ -1,0 +1,11 @@
+import { IsString } from "class-validator";
+import { Pagination } from "utils/response";
+
+export class GetAll{{Name}}Query extends Pagination {
+
+}
+
+export class GetOne{{Name}}Param {
+  @IsString()
+  {{name}}Id: string;
+}

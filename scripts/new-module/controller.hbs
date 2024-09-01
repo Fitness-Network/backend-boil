@@ -1,0 +1,51 @@
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { Public, Resource, Scopes } from "nest-keycloak-connect";
+import { {{Name}}Service } from "./{{name}}.service";
+import { GetAll{{Name}}Query, GetOne{{Name}}Param } from "./dto/get";
+import { Create{{Name}}Dto } from "./dto/create";
+import { Update{{Name}}Dto, Update{{Name}}Params } from "./dto/update";
+import { Delete{{Name}}Query } from "./dto/delete";
+
+@Controller('{{name}}s')
+@Resource('{{name}}')
+export class {{Name}}Controller {
+  constructor(
+    private {{name}}Service: {{Name}}Service
+  ) { }
+
+  @Get('')
+  @Scopes('view-all')
+  async getAll(@Query() query: GetAll{{Name}}Query) {
+    return this.{{name}}Service.getAll(query);
+  }
+
+  @Get(':{{name}}Id')
+  @Scopes('view')
+  async getOne(@Param() param: GetOne{{Name}}Param) {
+    return this.{{name}}Service.findById(param.{{name}}Id);
+  }
+
+  @Post()
+  @Scopes('create')
+  async create(@Body() body: Create{{Name}}Dto) {
+    return this.{{name}}Service.create(body);
+  }
+
+  @Put(':{{name}}Id')
+  @Scopes('update')
+  async update(@Body() body: Update{{Name}}Dto, @Param() params: Update{{Name}}Params) {
+    return this.{{name}}Service.updateOne({ _id: params.{{name}}Id }, body)
+  }
+
+  @Delete('soft')
+  @Scopes('delete')
+  async deleteSoft(@Query() query: Delete{{Name}}Query) {
+    return this.{{name}}Service.deleteMany(query.{{name}}Ids);
+  }
+
+  @Delete('hard')
+  @Scopes('delete')
+  async deleteHard(@Query() query: Delete{{Name}}Query) {
+    return this.{{name}}Service.hardDelete(query.{{name}}Ids);
+  }
+}

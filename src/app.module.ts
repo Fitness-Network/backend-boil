@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ExampleModule } from './modules/example/example.module';
 import { AuthGuard, KeycloakConnectModule, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
-import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { KeycloakConfig, keycloakLoader } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongoConfig, mongoConfigLoader } from './config/database.config';
+import { ExampleModule } from 'modules/example/example.module';
 
 @Module({
   imports: [
-    ExampleModule,
     KeycloakConnectModule.registerAsync({
       useFactory: (configService: ConfigService) => {
         const config = configService.get<KeycloakConfig>('keycloak')!;
@@ -35,7 +34,9 @@ import { MongoConfig, mongoConfigLoader } from './config/database.config';
       isGlobal: true,
       load: [keycloakLoader, mongoConfigLoader],
       expandVariables: true,
-    })
+    }),
+
+    ExampleModule
   ],
   controllers: [],
   providers: [

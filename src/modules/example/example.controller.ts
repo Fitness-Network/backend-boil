@@ -1,23 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { Public, Resource, Scopes } from "nest-keycloak-connect";
-import { ExampleService } from "./exmple.service";
+import { ExampleService } from "./example.service";
 import { GetAllExampleQuery, GetOneExampleParam } from "./dto/get";
 import { CreateExampleDto } from "./dto/create";
 import { UpdateExampleDto, UpdateExampleParams } from "./dto/update";
 import { DeleteExampleQuery } from "./dto/delete";
 
-@Controller('example')
+@Controller('examples')
 @Resource('example')
 export class ExampleController {
   constructor(
     private exampleService: ExampleService
   ) { }
-
-  @Get('/public')
-  @Public()
-  async public() {
-    return 'This is public route'
-  }
 
   @Get('')
   @Scopes('view-all')
@@ -25,10 +19,10 @@ export class ExampleController {
     return this.exampleService.getAll(query);
   }
 
-  @Get(':id')
+  @Get(':exampleId')
   @Scopes('view')
   async getOne(@Param() param: GetOneExampleParam) {
-    return this.exampleService.findById(param.id);
+    return this.exampleService.findById(param.exampleId);
   }
 
   @Post()
@@ -37,21 +31,21 @@ export class ExampleController {
     return this.exampleService.create(body);
   }
 
-  @Put(':id')
+  @Put(':exampleId')
   @Scopes('update')
   async update(@Body() body: UpdateExampleDto, @Param() params: UpdateExampleParams) {
-    return this.exampleService.updateOne({ _id: params.id }, body)
+    return this.exampleService.updateOne({ _id: params.exampleId }, body)
   }
 
   @Delete('soft')
   @Scopes('delete')
   async deleteSoft(@Query() query: DeleteExampleQuery) {
-    return this.exampleService.deleteMany(query.ids);
+    return this.exampleService.deleteMany(query.exampleIds);
   }
 
   @Delete('hard')
   @Scopes('delete')
   async deleteHard(@Query() query: DeleteExampleQuery) {
-    return this.exampleService.hardDelete(query.ids);
+    return this.exampleService.hardDelete(query.exampleIds);
   }
 }
