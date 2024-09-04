@@ -40,12 +40,12 @@ export class {{Name}}Controller {
   @Delete('soft')
   @Scopes('delete')
   async deleteSoft(@Query() query: Delete{{Name}}Query) {
-    return this.{{name}}Service.deleteMany(query.{{name}}Ids);
+    return this.{{name}}Service.deleteMany(query.ids);
   }
 
   @Delete('hard')
   @Scopes('delete')
   async deleteHard(@Query() query: Delete{{Name}}Query) {
-    return this.{{name}}Service.hardDelete(query.{{name}}Ids);
+    return this.{{name}}Service.hardDelete(query.ids);
   }
 }

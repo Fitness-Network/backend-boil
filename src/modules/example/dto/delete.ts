@@ -5,5 +5,5 @@ export class DeleteExampleQuery {
   @IsString({
     each: true
   })
-  exampleIds: Array<string>;
+  ids: Array<string>;
 }

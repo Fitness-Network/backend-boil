@@ -120,7 +120,7 @@ describe('Example', () => {
   it('[DELETE] /examples/soft -> 200 because role is admin', () => {
     return request(app.getHttpServer())
       .delete('/examples/soft')
-      .query({ exampleIds: [record._id] })
+      .query({ ids: [record._id] })
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
@@ -135,7 +135,7 @@ describe('Example', () => {
   it('[DELETE] /examples/hard -> 200 because role is admin', () => {
     return request(app.getHttpServer())
       .delete('/examples/hard')
-      .query({ exampleIds: [record._id] })
+      .query({ ids: [record._id] })
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
