@@ -26,7 +26,7 @@
     "module": "node @fitnet/backend-boilderplate/scripts/new-module/index.js"
   },
   "dependencies": {
-    "@fitnet/backend-boilerplate": "^1.0.8",
+    "@fitnet/backend-boilerplate": "^1.0.12",
     "@nestjs/bull": "^10.2.0",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.0.0",
