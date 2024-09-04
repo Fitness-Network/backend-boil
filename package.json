@@ -1,6 +1,6 @@
 {
   "name": "@fitnet/backend-boilerplate",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fitness-Network/backend-boil.git"
