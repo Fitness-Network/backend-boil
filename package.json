@@ -1,10 +1,6 @@
 {
   "name": "@fitnet/backend-boilerplate",
   "version": "1.0.10",
-  "bin": {
-    "create": "scripts/generate.js",
-    "module": "scripts/new-module/index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fitness-Network/backend-boil.git"
@@ -26,7 +22,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up:infra": "docker compose -f docker/infra.yaml --env-file .env up -d",
-    "module": "@fitnet/backend-boilerplate module"
+    "module": "module"
   },
   "dependencies": {
     "@fitnet/backend-boilerplate": "^1.0.8",
