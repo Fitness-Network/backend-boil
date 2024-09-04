@@ -1,6 +1,6 @@
 {
   "name": "@fitnet/backend-boilerplate",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "bin": {
     "create": "scripts/generate.js",
     "module": "scripts/new-module/index.js"
