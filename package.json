@@ -23,7 +23,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up:infra": "docker compose -f docker/infra.yaml --env-file .env up -d",
-    "module": "node @fitnet/backend-boilderplate/scripts/new-module/index.js"
+    "module": "node node_modules/@fitnet/backend-boilerplate/scripts/new-module/index.js"
   },
   "dependencies": {
     "@fitnet/backend-boilerplate": "^1.0.12",
