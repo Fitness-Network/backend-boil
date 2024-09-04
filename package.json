@@ -2,8 +2,8 @@
   "name": "@fitnet/backend-boilerplate",
   "version": "1.0.9",
   "bin": {
-    "@fitnet/backend-boilerplate/create": "scripts/generate.js",
-    "@fitnet/backend-boilerplate/module": "scripts/new-module/index.js"
+    "create": "scripts/generate.js",
+    "module": "scripts/new-module/index.js"
   },
   "repository": {
     "type": "git",
