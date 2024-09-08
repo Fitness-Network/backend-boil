@@ -45,6 +45,7 @@ describe('{{Name}}', () => {
   let userToken: string;
   let adminToken: string;
   let record: {{Name}};
+  const mockBody: CreateExampleDto = {};
 
   beforeAll(async () => {
     app = await createNestjsApp();
@@ -60,48 +61,48 @@ describe('{{Name}}', () => {
   })
 
 
-  it('[POST] /{{name}}s -> 201 because valid request', async () => {
+  it('[POST] /{{names}} -> 201 because valid request', async () => {
     const response = await request(app.getHttpServer())
-      .post('/{{name}}s')
-      .send({})
+      .post('/{{names}}')
+      .send(mockBody)
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(201)
     record = response.body;
   })
 
-  it('[GET] /{{name}}s/:exampleId -> 200 because role is admin', () => {
+  it('[GET] /{{names}}/:exampleId -> 200 because role is admin', () => {
     return request(app.getHttpServer())
-      .get('/{{name}}s/' + record._id)
+      .get('/{{names}}/' + record._id)
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
 
-  it('[GET] /{{name}}s -> 200 because role is admin', () => {
+  it('[GET] /{{names}} -> 200 because role is admin', () => {
     return request(app.getHttpServer())
-      .get('/{{name}}s')
+      .get('/{{names}}')
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
 
-  it('[PUT] /{{name}}s/:exampleId -> 200 because role is admin', () => {
+  it('[PUT] /{{names}}/:exampleId -> 200 because role is admin', () => {
     return request(app.getHttpServer())
-      .put('/{{name}}s/' + record._id)
-      .send({})
+      .put('/{{names}}/' + record._id)
+      .send(mockBody)
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
 
-  it('[DELETE] /{{name}}s/soft -> 200 because role is admin', () => {
+  it('[DELETE] /{{names}}/soft -> 200 because role is admin', () => {
     return request(app.getHttpServer())
-      .delete('/{{name}}s/soft')
+      .delete('/{{names}}/soft')
       .query({ ids: [record._id] })
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })
 
-  it('[DELETE] /{{name}}s/hard -> 200 because role is admin', () => {
+  it('[DELETE] /{{names}}/hard -> 200 because role is admin', () => {
     return request(app.getHttpServer())
-      .delete('/{{name}}s/hard')
+      .delete('/{{names}}/hard')
       .query({ ids: [record._id] })
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)

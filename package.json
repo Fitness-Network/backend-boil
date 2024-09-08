@@ -1,6 +1,6 @@
 {
   "name": "@fitnet/backend-boilerplate",
-  "version": "1.0.14",
+  "version": "1.0.17",
   "bin": "./scripts/generate.js",
   "repository": {
     "type": "git",
@@ -67,6 +67,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-telegram": "^1.0.0",
+    "pluralize": "^8.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "superagent": "^10.1.0",

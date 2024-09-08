@@ -5,6 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { KeycloakConfig } from "config";
 import { Example } from "./example.schema";
 import { createNestjsApp } from "utils/test";
+import { CreateExampleDto } from "./dto/create";
 
 type LoginData = {
   username: string;
@@ -45,6 +46,7 @@ describe('Example', () => {
   let userToken: string;
   let adminToken: string;
   let record: Example;
+  const mockBody: CreateExampleDto = {};
 
   beforeAll(async () => {
     app = await createNestjsApp();
@@ -63,7 +65,7 @@ describe('Example', () => {
   it('[POST] /examples -> 201 because valid request', async () => {
     const response = await request(app.getHttpServer())
       .post('/examples')
-      .send({})
+      .send(mockBody)
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(201)
     record = response.body;
@@ -86,7 +88,7 @@ describe('Example', () => {
   it('[PUT] /examples/:exampleId -> 200 because role is admin', () => {
     return request(app.getHttpServer())
       .put('/examples/' + record._id)
-      .send({})
+      .send(mockBody)
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
   })

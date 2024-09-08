@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path');
 const { program } = require('commander');
 const { cwd } = require('process');
+const pluralize = require('pluralize');
 
 program.parse();
 function capitalizeFirstLetter(string) {
@@ -13,7 +14,8 @@ if (!moduleName) throw new Error("Module name must be provide")
 
 const metadata = {
   Name: capitalizeFirstLetter(moduleName),
-  name: moduleName
+  names: pluralize.plural(moduleName),
+  name: moduleName,
 }
 
 const compileFiles = [
