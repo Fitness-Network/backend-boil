@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fitnet/backend-boilerplate": "^1.0.12",
+    "@keycloak/keycloak-admin-client": "^25.0.4",
     "@nestjs/bull": "^10.2.0",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.0.0",
@@ -58,6 +59,7 @@
     "nest-commander": "^3.15.0",
     "nest-keycloak-connect": "^1.10.1",
     "nestjs-telegraf": "^2.8.1",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.14",
     "openid-client": "^5.6.5",
     "otp-generator": "^4.0.1",

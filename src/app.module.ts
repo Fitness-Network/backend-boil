@@ -36,7 +36,7 @@ import { ExampleModule } from 'modules/example/example.module';
       expandVariables: true,
     }),
 
-    ExampleModule
+    ExampleModule,
   ],
   controllers: [],
   providers: [

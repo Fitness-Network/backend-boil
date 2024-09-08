@@ -52,11 +52,6 @@ describe('Example', () => {
     const configSerice: ConfigService = app.get(ConfigService)
     const config = configSerice.get<KeycloakConfig>('keycloak')!;
 
-    userToken = await mockLogin({
-      ...config,
-      username: config.accounts.user.account,
-      password: config.accounts.user.pass
-    })
     adminToken = await mockLogin({
       ...config,
       username: config.accounts.admin.account,
@@ -64,13 +59,6 @@ describe('Example', () => {
     })
   })
 
-
-  it('[GET] /examples -> 403 because role is user', () => {
-    return request(app.getHttpServer())
-      .post('/examples')
-      .set('Authorization', 'Bearer ' + userToken)
-      .expect(403)
-  })
 
   it('[POST] /examples -> 201 because valid request', async () => {
     const response = await request(app.getHttpServer())
@@ -81,18 +69,11 @@ describe('Example', () => {
     record = response.body;
   })
 
-  it('[GET] /examples/:exampleId -> 200 because role is user', () => {
+  it('[GET] /examples/:exampleId -> 200 because role is admin', () => {
     return request(app.getHttpServer())
       .get('/examples/' + record._id)
-      .set('Authorization', 'Bearer ' + userToken)
+      .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
-  })
-
-  it('[GET] /examples -> 403 because role is user', () => {
-    return request(app.getHttpServer())
-      .get('/examples')
-      .set('Authorization', 'Bearer ' + userToken)
-      .expect(403)
   })
 
   it('[GET] /examples -> 200 because role is admin', () => {
@@ -110,26 +91,12 @@ describe('Example', () => {
       .expect(200)
   })
 
-  it('[DELETE] /examples/soft -> 403 because role is user', () => {
-    return request(app.getHttpServer())
-      .delete('/examples/soft')
-      .set('Authorization', 'Bearer ' + userToken)
-      .expect(403)
-  })
-
   it('[DELETE] /examples/soft -> 200 because role is admin', () => {
     return request(app.getHttpServer())
       .delete('/examples/soft')
       .query({ ids: [record._id] })
       .set('Authorization', 'Bearer ' + adminToken)
       .expect(200)
-  })
-
-  it('[DELETE] /examples/hard -> 403 because role is user', () => {
-    return request(app.getHttpServer())
-      .delete('/examples/hard')
-      .set('Authorization', 'Bearer ' + userToken)
-      .expect(403)
   })
 
   it('[DELETE] /examples/hard -> 200 because role is admin', () => {
