@@ -1,5 +1,5 @@
 {
-  "name": "@fitnet/backend-boilerplate",
+  "name": "@hoaian412003/backend-boilerplate",
   "version": "1.0.18",
   "bin": "./scripts/generate.js",
   "repository": {
