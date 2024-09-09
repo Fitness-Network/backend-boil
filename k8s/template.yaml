@@ -1,0 +1,68 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example
+  namespace: fitnet
+  labels:
+    app: example
+spec:
+  selector:
+    matchLabels:
+      app: example
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: example
+        image: docker.relationc.com/example:master
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: backend-environment
+        ports:
+        - containerPort: 3000
+          name: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example
+  namespace: fitnet
+spec:
+  selector:
+    app: example
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+---
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-api-ingress
+  namespace: fitnet
+  annotations:
+    cert-manager.io/cluster-issuer: "ca-issuer"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - api-fitnet.relationc.com
+      secretName: api-fitnet
+  rules:
+  - host: api-fitnet.relationc.com
+    http:
+      paths:
+      - path: /{}
+        pathType: Prefix
+        backend:
+          service:
+            name: example
+            port:
+              number: 80
