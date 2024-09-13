@@ -1,7 +1,7 @@
 import { IsString } from "class-validator";
-import { Pagination } from "utils/response";
+import { BaseQuery } from "base/base.query";
 
-export class GetAllExampleQuery extends Pagination {
+export class GetAllExampleQuery extends BaseQuery {
 
 }
 
