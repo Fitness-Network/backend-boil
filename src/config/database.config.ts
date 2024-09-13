@@ -17,7 +17,8 @@ export const mongoConfigLoader = registerAs<MongoConfig>('database', () => {
   const port = process.env.MONGO_PORT!;
 
   let uri: string = '';
-  if (!user || !pass) uri = `mongodb://${host}:${port}/${db}?authSource=admin`;
+  if (process.env.MONGO_URI) uri = process.env.MONGO_URI;
+  else if (!user || !pass) uri = `mongodb://${host}:${port}/${db}?authSource=admin`;
   else uri = `mongodb://${user}:${pass}@${host}:${port}/${db}?authSource=admin`
 
   return {
