@@ -6,6 +6,7 @@ import { KeycloakConfig, keycloakLoader } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongoConfig, mongoConfigLoader } from './config/database.config';
 import { ExampleModule } from 'modules/example/example.module';
+import { CategoryModule } from 'modules/category/category.module';
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { ExampleModule } from 'modules/example/example.module';
       expandVariables: true,
     }),
 
-    ExampleModule
+    ExampleModule,
+    CategoryModule
   ],
   controllers: [],
   providers: [

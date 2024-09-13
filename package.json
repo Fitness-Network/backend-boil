@@ -23,11 +23,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up:infra": "docker compose -f docker/infra.yaml --env-file .env up -d",
-    "module": "node node_modules/@hoaian412003/backend-boilerplate/scripts/new-module/index.js",
-    "k8s": "node node_modules/@hoaian412003/backend-boilerplate/scripts/new-k8s/index.js"
+    "module": "node node_modules/@fitnet/backend-boilerplate/scripts/new-module/index.js",
+    "k8s": "node node_modules/@fitnet/backend-boilerplate/scripts/new-k8s/index.js"
   },
   "dependencies": {
-    "@fitnet/backend-boilerplate": "^1.0.12",
+    "@fitnet/backend-boilerplate": "^1.0.19",
     "@keycloak/keycloak-admin-client": "^25.0.4",
     "@nestjs/bull": "^10.2.0",
     "@nestjs/cache-manager": "^2.2.2",

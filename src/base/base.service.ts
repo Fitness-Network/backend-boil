@@ -46,9 +46,6 @@ export class BaseService<T extends Document> {
   }
 
   async getAll(pagination: Pagination, filter: FilterQuery<T> = {}, _options?: QueryOptions<T>): Promise<PaginationResponse<T>> {
-    if (pagination.keyword) {
-      set(filter, '$text.$search', pagination.keyword)
-    }
     const data = this.model.find({ ...filter, isDeleted: false }).skip((pagination.page - 1) * pagination.limit).limit(pagination.limit);
     if (pagination.sort) data.sort(pagination.sort);
     const total = await this.count({ ...filter, isDeleted: false });

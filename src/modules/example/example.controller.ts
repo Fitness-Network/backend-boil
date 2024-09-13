@@ -14,9 +14,10 @@ export class ExampleController {
   ) { }
 
   @Get('')
-  @Scopes('view-all')
+  // @Scopes('view-all')
+  @Public()
   async getAll(@Query() query: GetAllExampleQuery) {
-    return this.exampleService.getAll(query);
+    return this.exampleService.getAll(query, query.filters);
   }
 
   @Get(':exampleId')
@@ -26,7 +27,8 @@ export class ExampleController {
   }
 
   @Post()
-  @Scopes('create')
+  // @Scopes('create')
+  @Public()
   async create(@Body() body: CreateExampleDto) {
     return this.exampleService.create(body);
   }
