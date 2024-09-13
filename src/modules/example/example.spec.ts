@@ -5,6 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { KeycloakConfig } from "config";
 import { Example } from "./example.schema";
 import { createNestjsApp } from "utils/test";
+import { CreateExampleDto } from "./dto/create";
 
 type LoginData = {
   username: string;
