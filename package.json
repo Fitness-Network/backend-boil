@@ -1,6 +1,6 @@
 {
   "name": "@hoaian412003/backend-boilerplate",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "bin": "./scripts/generate.js",
   "repository": {
     "type": "git",
