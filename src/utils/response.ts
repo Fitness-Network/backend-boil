@@ -59,13 +59,6 @@ export class Pagination {
   })
   @IsString()
   @IsOptional()
-  keyword: string = '';
-
-  @ApiProperty({
-    required: false
-  })
-  @IsString()
-  @IsOptional()
   sort: string = '';
 }
 
