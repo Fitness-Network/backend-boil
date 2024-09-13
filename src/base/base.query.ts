@@ -1,10 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { ApiProperty, ApiQuery } from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsNumber, IsOptional, IsString, Min, registerDecorator, ValidationArguments, ValidationOptions, Validator, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
+import { IsNumber, IsOptional, IsString, Min } from "class-validator";
 import { FilterQuery } from "mongoose";
-import { ConditionalFilter, IsMongodbFilter, LogicalFilter, MongodbFilterRule, MongodbFilterTransform } from "./filter";
-import { type } from "os";
+import { MongodbFilterTransform } from "./filter";
 
 export class BaseQuery {
 
